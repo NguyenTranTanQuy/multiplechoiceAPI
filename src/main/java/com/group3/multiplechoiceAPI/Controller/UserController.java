@@ -1,12 +1,17 @@
 package com.group3.multiplechoiceAPI.Controller;
 
 import com.group3.multiplechoiceAPI.Controller.Model.ResponseData;
-import com.group3.multiplechoiceAPI.DTO.Tested_Assignment;
+import com.group3.multiplechoiceAPI.DTO.User.UserConverter;
+import com.group3.multiplechoiceAPI.DTO.User.UserDTO;
 import com.group3.multiplechoiceAPI.Model.User;
 import com.group3.multiplechoiceAPI.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -19,8 +24,13 @@ public class UserController {
     }
 
     @GetMapping(path = "/all")
-    public List<User> getAllUsers() {
-        return userService.getAllStudents();
+    public ResponseData getAllUsers() {
+        List<UserDTO> userDTOList = userService.getAllStudents().stream().map(UserConverter::toDTO).collect(Collectors.toList());
+        ResponseData responseData = new ResponseData();
+        responseData.setStatus(200);
+        responseData.setMessage("Get all users successfully");
+        responseData.setDataList(Collections.singletonList(userDTOList));
+        return responseData;
     }
 
     @GetMapping(path = "/{username}")
@@ -30,7 +40,7 @@ public class UserController {
         if (user != null) {
             responseData.setStatus(200);
             responseData.setMessage("Get user successfully");
-            responseData.setData(user);
+            responseData.setData(UserConverter.toDTO(user));
         } else {
             responseData.setStatus(500);
             responseData.setMessage("The username "+ username + " doesn't exists!");
@@ -136,7 +146,7 @@ public class UserController {
     @GetMapping(path = "/tested-assignment/{username}")
     public ResponseData getTestByUsername(@PathVariable("username") String username) {
         ResponseData responseData = new ResponseData();
-        List<Object[]> testedAssignment = userService.getTestByUsername(username);
+        List<Object> testedAssignment = userService.getTestByUsername(username);
         if (testedAssignment != null) {
             responseData.setStatus(200);
             responseData.setMessage("Get user successfully");
@@ -144,6 +154,38 @@ public class UserController {
         } else {
             responseData.setStatus(500);
             responseData.setMessage("The tested assignment of "+ username + " doesn't exists!");
+        }
+
+        return  responseData;
+    }
+
+    @GetMapping(path = "/statistic/{username}")
+    public ResponseData getStatistic(@PathVariable("username") String username) {
+        ResponseData responseData = new ResponseData();
+        List<Object> statistic = userService.getStatistic(username);
+        if (statistic != null) {
+            responseData.setStatus(200);
+            responseData.setMessage("Get user successfully");
+            responseData.setDataList(statistic);
+        } else {
+            responseData.setStatus(500);
+            responseData.setMessage("The tested assignment of "+ username + " doesn't exists!");
+        }
+
+        return  responseData;
+    }
+
+    @GetMapping(path = "/statistic/topic-set/{topic_set_code}")
+    public ResponseData getTopicSetStatistic(@PathVariable("topic_set_code") String topic_set_code) {
+        ResponseData responseData = new ResponseData();
+        List<Object> statistic = userService.getTopicSetStatistic(topic_set_code);
+        if (statistic != null) {
+            responseData.setStatus(200);
+            responseData.setMessage("Get user successfully");
+            responseData.setDataList(statistic);
+        } else {
+            responseData.setStatus(500);
+            responseData.setMessage("The topic set of "+ topic_set_code + " doesn't exists!");
         }
 
         return  responseData;

@@ -26,4 +26,7 @@ public class Topic_Set {
 
     @OneToMany(mappedBy = "topicSet")
     private List<Share> shareList;
+
+    @OneToMany(mappedBy = "topicSet")
+    private List<Assignment> assignmentList;
 }

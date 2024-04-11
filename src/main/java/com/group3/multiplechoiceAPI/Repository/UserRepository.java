@@ -1,6 +1,5 @@
 package com.group3.multiplechoiceAPI.Repository;
 
-import com.group3.multiplechoiceAPI.DTO.Tested_Assignment;
 import com.group3.multiplechoiceAPI.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,10 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-
-    @Query(value = "SELECT u FROM User u WHERE u.username = :username")
-    Optional<User> findUserByUsername(String username);
+public interface UserRepository extends JpaRepository<User, String> {
+    Optional<User> findByUsername(String username);
 
     @Modifying
     @Transactional
@@ -30,5 +27,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     void resetPassword(String username, String password);
 
     @Procedure(name="getTestByUsername")
-    List<Object[]> getTestByUsername(String username);
+    List<Object> getTestByUsername(String username);
+
+    @Procedure(name="getStatistic")
+    List<Object> getStatistic(String username);
+
+    @Procedure(name="getTopicSetStatistic")
+    List<Object> getTopicSetStatistic(String topic_set_code);
 }

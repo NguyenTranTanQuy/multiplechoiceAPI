@@ -24,4 +24,8 @@ public class Assignment {
 
     @OneToMany(mappedBy = "assignment")
     private List<Detailed_Assignment> detailedAssignmentList;
+
+    @ManyToOne
+    @JoinColumn(name="topicSetCode")
+    private Topic_Set topicSet;
 }

@@ -1,6 +1,5 @@
 package com.group3.multiplechoiceAPI.Controller.Model;
 
-import com.group3.multiplechoiceAPI.DTO.Tested_Assignment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,5 +12,5 @@ public class ResponseData {
     private int status;
     private String message;
     private Object data;
-    private List<Object[]> dataList;
+    private List<Object> dataList;
 }
