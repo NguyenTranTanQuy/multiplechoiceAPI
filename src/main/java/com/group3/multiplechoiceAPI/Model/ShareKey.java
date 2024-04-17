@@ -15,6 +15,6 @@ public class ShareKey implements Serializable {
     @Column(name="username")
     private String username;
 
-    @Column(name="topicSetCode")
-    private String topicSetCode;
+    @Column(name="topicSetID")
+    private Long topicSetID;
 }

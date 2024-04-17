@@ -6,19 +6,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
 public class Topic_Set {
-    private @Id String topicSetCode;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private @Id Long topicSetID;
+
     private String topicSetName;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date created;
+
     private Float duration;
 
     @ManyToOne
-    @JoinColumn(name="topicCode")
+    @JoinColumn(name="topicID")
     private Topic topic;
 
     @OneToMany(mappedBy = "topicSet")

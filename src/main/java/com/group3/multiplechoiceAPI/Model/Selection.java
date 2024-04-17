@@ -14,6 +14,6 @@ public class Selection {
     private String selectionContent;
 
     @ManyToOne
-    @JoinColumn(name="questionCode")
+    @JoinColumn(name="questionID")
     private Question question;
 }

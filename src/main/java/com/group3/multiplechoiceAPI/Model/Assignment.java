@@ -12,10 +12,9 @@ import java.util.List;
 @Entity
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
 public class Assignment {
-    private @Id String assignmentCode;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private @Id long assignmentID;
     private Date testDate;
-    private Float score;
-    private int nb_completedSentences;
     private Float duration;
 
     @ManyToOne
@@ -26,6 +25,6 @@ public class Assignment {
     private List<Detailed_Assignment> detailedAssignmentList;
 
     @ManyToOne
-    @JoinColumn(name="topicSetCode")
+    @JoinColumn(name="topicSetID")
     private Topic_Set topicSet;
 }

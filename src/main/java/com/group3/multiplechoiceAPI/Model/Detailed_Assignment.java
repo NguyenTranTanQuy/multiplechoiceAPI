@@ -13,13 +13,13 @@ public class Detailed_Assignment {
     private DetailedAssignmentKey id;
 
     @ManyToOne
-    @MapsId("assignmentCode")
-    @JoinColumn(name="assignmentCode")
+    @MapsId("assignmentID")
+    @JoinColumn(name="assignmentID")
     private Assignment assignment;
 
     @ManyToOne
-    @MapsId("questionCode")
-    @JoinColumn(name="questionCode")
+    @MapsId("questionID")
+    @JoinColumn(name="questionID")
     private Question question;
 
     private String selectedAnswer;

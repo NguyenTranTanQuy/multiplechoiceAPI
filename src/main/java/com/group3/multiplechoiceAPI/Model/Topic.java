@@ -9,7 +9,8 @@ import java.util.List;
 @Table(name="topic")
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
 public class Topic {
-    private @Id String topicCode;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private @Id Long topicID;
     private @NonNull String topicName;
 
     @ManyToOne
