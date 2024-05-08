@@ -9,6 +9,7 @@ import com.group3.multiplechoiceAPI.Repository.UserRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -24,7 +25,7 @@ public class AssignmentService {
         this.assignmentRepository = assignmentRepository;
     }
 
-    public boolean addAssignment(float duration, Long topicSetID, String username) {
+    public long addAssignment(float duration, Long topicSetID, String username) {
         Assignment assignment = new Assignment();
         Date currentDate = new Date();
 
@@ -32,14 +33,23 @@ public class AssignmentService {
         assignment.setDuration(duration);
 
         Optional<Topic_Set> topicSet = topicSetRepository.findById(topicSetID);
-        if (topicSet.isEmpty()) return false;
+        if (topicSet.isEmpty()) return -1; // Hoặc mã lỗi khác
         assignment.setTopicSet(topicSet.get());
 
         Optional<User> user = userRepository.findByUsername(username);
-        if (user.isEmpty()) return false;
+        if (user.isEmpty()) return -1; // Hoặc mã lỗi khác
         assignment.setUser(user.get());
 
-        assignmentRepository.save(assignment);
-        return true;
+        Assignment savedAssignment = assignmentRepository.save(assignment);
+        return savedAssignment.getAssignmentID();
+    }
+
+
+    public List<Assignment> getAllAssignmentByTopicSetIDAndUsername(Long topicSetID, String username) {
+        return assignmentRepository.findAllTopicSetByTopicSetIDAndUsername(topicSetID,username);
+    }
+    public long AssignmentCount(){
+        return assignmentRepository.count();
     }
 }
+

@@ -1,5 +1,7 @@
 package com.group3.multiplechoiceAPI.Service;
 
+import com.group3.multiplechoiceAPI.DTO.Notification.NotificationResponse;
+import com.group3.multiplechoiceAPI.DTO.User.Response.UserDtoResponse;
 import com.group3.multiplechoiceAPI.Model.User;
 import com.group3.multiplechoiceAPI.Repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class UserService {
@@ -92,5 +95,38 @@ public class UserService {
     public List<Object> getTopicSetStatistic(String topic_set_code) {
         List<Object> topicSetStatistic = userRepository.getTopicSetStatistic(topic_set_code);
         return topicSetStatistic;
+    }
+
+//    Trieu
+    public List<UserDtoResponse> getFriends(String username) {
+        User user = userRepository.findById(username).orElseThrow();
+        List<UserDtoResponse> friend = user.getFriendshipsAsUser2().stream().map(friendShip -> new UserDtoResponse(friendShip.getUser1().getUsername(),friendShip.getUser1().getName())).collect(Collectors.toList());
+        return friend;
+    }
+
+    public List<NotificationResponse> getNotification(String username) {
+        User user = userRepository.findById(username).orElseThrow();
+
+        List<NotificationResponse> responses = user.getShareList().stream().map(
+                item -> new NotificationResponse(item.getSharedDate().toString(),item.getShareContent())).collect(Collectors.toList());
+
+        return responses;
+    }
+
+    public boolean updateUser2(String username, String name, String email, String phone) {
+        Optional<User> optionalUser = userRepository.findByUsername(username);
+
+        if (optionalUser.isEmpty()) {
+            return false;
+        }
+
+        User user = optionalUser.get();
+        user.setName(name);
+        user.setPhoneNumber(phone);
+        user.setEmail(email);
+
+        userRepository.save(user);
+
+        return true;
     }
 }

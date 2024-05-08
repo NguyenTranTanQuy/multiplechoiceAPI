@@ -17,6 +17,6 @@ public class Topic {
     @JoinColumn(name="username")
     private User user;
 
-    @OneToMany(mappedBy = "topic")
+    @OneToMany(mappedBy = "topic",cascade = CascadeType.MERGE)
     private List<Topic_Set> topicSetList;
 }

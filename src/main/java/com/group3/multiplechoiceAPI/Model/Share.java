@@ -16,12 +16,10 @@ public class Share {
 
     @ManyToOne
     @MapsId("username")
-    @JoinColumn(name="username")
     private User user;
 
     @ManyToOne
     @MapsId("topicSetID")
-    @JoinColumn(name="topicSetID")
     private Topic_Set topicSet;
 
     @Temporal(TemporalType.TIMESTAMP)

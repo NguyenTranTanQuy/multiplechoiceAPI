@@ -1,8 +1,14 @@
 package com.group3.multiplechoiceAPI.Controller;
 
 import com.group3.multiplechoiceAPI.Controller.Model.ResponseData;
+import com.group3.multiplechoiceAPI.DTO.DetailedAssignment.DetailedAssignmentConverter;
+import com.group3.multiplechoiceAPI.DTO.DetailedAssignmentDTO;
+import com.group3.multiplechoiceAPI.Model.Detailed_Assignment;
 import com.group3.multiplechoiceAPI.Service.DetailedAssignmentService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/detailed-assignment")
@@ -13,7 +19,7 @@ public class DetailedAssignmentController {
         this.detailedAssignmentService = detailedAssignmentService;
     }
 
-    @PostMapping(path = "/")
+    @PostMapping(path = "/add")
     @ResponseBody
     public ResponseData addDetailedAssignment(@RequestParam Long assignmentID,
                                       @RequestParam Long questionID,
@@ -28,7 +34,16 @@ public class DetailedAssignmentController {
             responseData.setStatus(500);
             responseData.setMessage("The assignment ID "+ assignmentID + " or question ID " + questionID + " does not exists!");
         }
-
         return responseData;
+    }
+
+    @GetMapping("/findAssignmentIDAndQuestionID")
+    public List<Detailed_Assignment> getDetailedAssignmentsByAssignmentIDAndQuestionID(@RequestParam Long assignmentID, @RequestParam Long questionID) {
+        return detailedAssignmentService.findDetailedAssignmentsByAssignmentIDAndQuestionID(assignmentID, questionID);
+    }
+
+    @GetMapping("/findAssignmentID")
+    public List<Detailed_Assignment> getDetailedAssignmentsByAssignmentID(@RequestParam Long assignmentID) {
+        return detailedAssignmentService.findDetailedAssignmentsByAssignmentID(assignmentID);
     }
 }

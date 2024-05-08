@@ -1,5 +1,6 @@
 package com.group3.multiplechoiceAPI.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,13 +18,16 @@ public class Assignment {
     private Date testDate;
     private Float duration;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="username")
     private User user;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "assignment")
     private List<Detailed_Assignment> detailedAssignmentList;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="topicSetID")
     private Topic_Set topicSet;

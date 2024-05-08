@@ -1,11 +1,15 @@
 package com.group3.multiplechoiceAPI.Controller;
 
 import com.group3.multiplechoiceAPI.Controller.Model.ResponseData;
+import com.group3.multiplechoiceAPI.DTO.Notification.NotificationResponse;
+import com.group3.multiplechoiceAPI.DTO.User.Response.UserDtoResponse;
 import com.group3.multiplechoiceAPI.DTO.User.UserConverter;
 import com.group3.multiplechoiceAPI.DTO.User.UserDTO;
 import com.group3.multiplechoiceAPI.Model.User;
 import com.group3.multiplechoiceAPI.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -189,6 +193,36 @@ public class UserController {
         }
 
         return  responseData;
+    }
+
+//    Trieu
+    @GetMapping("{username}/friends")
+    public ResponseEntity<List<UserDtoResponse>> getFriends(@PathVariable(name = "username") String username){
+        List<UserDtoResponse> responses = userService.getFriends(username);
+        return ResponseEntity.status(HttpStatus.OK).body(responses);
+    }
+
+    @GetMapping("{username}/notification")
+    public ResponseEntity<List<NotificationResponse>> getNotification(@PathVariable(name = "username") String username){
+        List<NotificationResponse> responses = userService.getNotification(username);
+        return ResponseEntity.status(HttpStatus.OK).body(responses);
+    }
+
+    @PostMapping(path = "/update")
+    @ResponseBody
+    public ResponseData updateUser2(@RequestParam String username,
+                                    @RequestParam String name,
+                                    @RequestParam String email,
+                                    @RequestParam String phoneNumber) {
+        boolean isSuccess = userService.updateUser2(username,name,email,phoneNumber);
+
+        ResponseData responseData = new ResponseData();
+        if(isSuccess) {
+            responseData.setStatus(200);
+            responseData.setMessage("Updated user successfully");
+        }
+
+        return responseData;
     }
 
 }

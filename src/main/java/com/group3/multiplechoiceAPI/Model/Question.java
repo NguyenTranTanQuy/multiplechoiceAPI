@@ -1,5 +1,6 @@
 package com.group3.multiplechoiceAPI.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,13 +18,16 @@ public class Question {
     private String questionContent;
     private String answer;
 
-    @OneToMany(mappedBy = "question")
+    @JsonIgnore
+    @OneToMany(mappedBy = "question", cascade = CascadeType.MERGE)
     private List<Selection> selectionList;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="topicSetID")
     private Topic_Set topicSet;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "question")
     private List<Detailed_Assignment> detailedAssignmentList;
 }

@@ -1,3 +1,4 @@
+
 package com.group3.multiplechoiceAPI.Service;
 
 import com.group3.multiplechoiceAPI.Model.*;
@@ -7,6 +8,7 @@ import com.group3.multiplechoiceAPI.Repository.QuestionRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -42,4 +44,12 @@ public class DetailedAssignmentService {
         detailedAssignmentRepository.save(detailedAssignment);
         return true;
     }
+    public List<Detailed_Assignment> findDetailedAssignmentsByAssignmentIDAndQuestionID(Long assignmentID, Long questionID) {
+        return detailedAssignmentRepository.findByAssignmentAssignmentIDAndQuestionQuestionID(assignmentID, questionID);
+    }
+
+    public List<Detailed_Assignment> findDetailedAssignmentsByAssignmentID(Long assignmentID) {
+        return detailedAssignmentRepository.findByAssignmentAssignmentID(assignmentID);
+    }
+
 }

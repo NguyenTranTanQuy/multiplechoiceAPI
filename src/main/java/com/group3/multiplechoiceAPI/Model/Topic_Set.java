@@ -1,5 +1,6 @@
 package com.group3.multiplechoiceAPI.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,12 +29,12 @@ public class Topic_Set {
     @JoinColumn(name="topicID")
     private Topic topic;
 
-    @OneToMany(mappedBy = "topicSet")
-    private List<Question> questionList;
+    @OneToMany(mappedBy = "topicSet", cascade = CascadeType.MERGE)
+    private List<Question> questionList = new ArrayList<>();
 
     @OneToMany(mappedBy = "topicSet")
-    private List<Share> shareList;
+    private List<Share> shareList = new ArrayList<>();
 
     @OneToMany(mappedBy = "topicSet")
-    private List<Assignment> assignmentList;
+    private List<Assignment> assignmentList = new ArrayList<>();
 }

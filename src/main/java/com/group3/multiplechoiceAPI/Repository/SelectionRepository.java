@@ -1,17 +1,17 @@
-
 package com.group3.multiplechoiceAPI.Repository;
 
 import com.group3.multiplechoiceAPI.Model.Question;
+import com.group3.multiplechoiceAPI.Model.Selection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface QuestionRepository extends JpaRepository<Question, Long> {
-    @Query("SELECT q FROM Question q WHERE q.topicSet.topicSetID = :topicSetID")
-    List<Question> findAllQuestionsByTopicSetID(@Param("topicSetID") Long topicSetID);
+public interface SelectionRepository extends JpaRepository<Selection,Long> {
 
+    @Query(value = "SELECT q FROM Selection q WHERE q.question.questionID= :questionID")
+    List<Selection> findAllSelectionsByQuestionID(Long questionID);
 }
+
