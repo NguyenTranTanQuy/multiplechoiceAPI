@@ -16,13 +16,12 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
 
-
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public List<User> getAllStudents() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
@@ -81,36 +80,29 @@ public class UserService {
 
     @Transactional()
     public List<Object> getTestByUsername(String username) {
-        List<Object> testedAssignmentOfUsername = userRepository.getTestByUsername(username);
-        return testedAssignmentOfUsername;
+        return userRepository.getTestByUsername(username);
     }
 
     @Transactional()
     public List<Object> getStatistic(String username) {
-        List<Object> statistic = userRepository.getStatistic(username);
-        return statistic;
+        return userRepository.getStatistic(username);
     }
 
     @Transactional()
     public List<Object> getTopicSetStatistic(String topic_set_code) {
-        List<Object> topicSetStatistic = userRepository.getTopicSetStatistic(topic_set_code);
-        return topicSetStatistic;
+        return userRepository.getTopicSetStatistic(topic_set_code);
     }
 
 //    Trieu
     public List<UserDtoResponse> getFriends(String username) {
         User user = userRepository.findById(username).orElseThrow();
-        List<UserDtoResponse> friend = user.getFriendshipsAsUser2().stream().map(friendShip -> new UserDtoResponse(friendShip.getUser1().getUsername(),friendShip.getUser1().getName())).collect(Collectors.toList());
-        return friend;
+        return user.getFriendshipsAsUser2().stream().map(friendShip -> new UserDtoResponse(friendShip.getUser1().getUsername(),friendShip.getUser1().getName())).collect(Collectors.toList());
     }
 
     public List<NotificationResponse> getNotification(String username) {
         User user = userRepository.findById(username).orElseThrow();
-
-        List<NotificationResponse> responses = user.getShareList().stream().map(
+        return user.getShareList().stream().map(
                 item -> new NotificationResponse(item.getSharedDate().toString(),item.getShareContent())).collect(Collectors.toList());
-
-        return responses;
     }
 
     public boolean updateUser2(String username, String name, String email, String phone) {

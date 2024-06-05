@@ -1,5 +1,6 @@
 package com.group3.multiplechoiceAPI.Controller;
 
+import com.group3.multiplechoiceAPI.DTO.Share.Request.SharedTopicSetResponse;
 import com.group3.multiplechoiceAPI.DTO.TopicSet.TopicSetConverter;
 import com.group3.multiplechoiceAPI.DTO.TopicSet.TopicSetDTO;
 import com.group3.multiplechoiceAPI.DTO.TopicSet.TopicSetRequest;
@@ -35,8 +36,8 @@ public class TopicSetController {
     }
 
     @GetMapping("/{username}/shared")
-    public List<TopicSetDTO> getShareTopicOfUser(@PathVariable("username") String username){
-        return topicSetService.getShareTopicOfUer(username).stream().map(TopicSetConverter::toDTO).collect(Collectors.toList());
+    public List<SharedTopicSetResponse> getShareTopicOfUser(@PathVariable("username") String username){
+        return topicSetService.getShareTopicOfUer(username);
     }
 
     @GetMapping("/topicID")

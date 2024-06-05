@@ -7,10 +7,7 @@ import com.group3.multiplechoiceAPI.Model.Selection;
 import com.group3.multiplechoiceAPI.Service.QuestionService;
 import com.group3.multiplechoiceAPI.Service.SelectionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,10 +32,16 @@ public class QuestionController {
     public List<QuestionDTO> getQuestionByTopicSetID(@PathVariable("topic_set_code") Long topicSetID){
         return (List<QuestionDTO>) questionService.getAllQuestionsByTopicSetID(topicSetID).stream().map(QuestionConverter::toDTO).collect(Collectors.toList());
     }
+    //*************LEVEL***************
+    @GetMapping(path = "/findQuestion")
+    public List<QuestionDTO> getQuestionByTopicSetIDAndLevel(@RequestParam("topicSetID") Long topicSetID,
+                                                             @RequestParam("level") int level){
+        return (List<QuestionDTO>) questionService.getAllQuestionsByTopicSetIDAndLevel(topicSetID,level).stream().map(QuestionConverter::toDTO).collect(Collectors.toList());
+    }
 
-    @GetMapping(path = "/q/{questionCode}")
-    public Question getSelectionByQuestionID(@PathVariable("questionCode") Long questionCode){
-        return questionService.getQuestionByID(questionCode);
+    @GetMapping("/levels")
+    public List<Integer> getDistinctLevels(@RequestParam("topicSetID") Long topicSetID) {
+        return questionService.checkLevel(topicSetID);
     }
 }
 

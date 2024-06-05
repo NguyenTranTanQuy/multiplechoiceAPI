@@ -13,5 +13,7 @@ public class QuestionRequest {
 
     private String answer;
 
+    private int level;
+
     private List<SelectionRequest> selection = new ArrayList<>();
 }

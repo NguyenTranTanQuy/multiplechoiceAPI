@@ -18,4 +18,6 @@ public class QuestionDTO {
     private Long questionID;
     private String answer;
     private String questionContent;
+    private int level;
+
 }

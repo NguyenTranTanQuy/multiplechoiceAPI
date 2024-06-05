@@ -1,5 +1,6 @@
 package com.group3.multiplechoiceAPI.Service;
 
+import com.group3.multiplechoiceAPI.DTO.Share.Request.SharedTopicSetResponse;
 import com.group3.multiplechoiceAPI.DTO.TopicSet.*;
 import com.group3.multiplechoiceAPI.Model.*;
 import com.group3.multiplechoiceAPI.Repository.TopicRepository;
@@ -97,7 +98,7 @@ public class TopicSetService {
             question.setQuestionContent(questionRequest.getQuestionContent());
             question.setAnswer(questionRequest.getAnswer());
             question.setTopicSet(createTopicSet);
-
+            question.setLevel(questionRequest.getLevel());
             List<Selection> selections = questionRequest.getSelection().stream().map(selectionRequest -> {
                 Selection selection = new Selection();
                 selection.setSelectionContent(selectionRequest.getSelectionContent());
@@ -118,9 +119,10 @@ public class TopicSetService {
         return convertToTopicSetResponse(topic.getTopicSetList().get(topic.getTopicSetList().size() -1 ));
     }
 
-    public List<Topic_Set> getShareTopicOfUer(String username) {
+    public List<SharedTopicSetResponse> getShareTopicOfUer(String username) {
         User user = userRepository.findByUsername(username).orElse(null);
-        List<Topic_Set> list = user.getShareList().stream().map(item -> item.getTopicSet()).collect(Collectors.toList());
+        List<SharedTopicSetResponse> list = user.getShareList().stream().map(item ->
+                new SharedTopicSetResponse(item.getTopicSet().getTopicSetID(), item.getTopicSet().getTopicSetName(),item.getUser().getName(),item.getTopicSet().getDuration())).collect(Collectors.toList());
         return list;
     }
 }

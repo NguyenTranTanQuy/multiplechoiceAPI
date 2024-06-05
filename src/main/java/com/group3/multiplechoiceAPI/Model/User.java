@@ -38,7 +38,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Assignment> assignmentList;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
     private List<Topic> topicList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")

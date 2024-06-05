@@ -11,7 +11,6 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-
 public class TopicDTO {
     private Long topicID;
     private String username;

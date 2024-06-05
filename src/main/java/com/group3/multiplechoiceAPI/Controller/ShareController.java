@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.*;
 public class ShareController {
     @Autowired
     private IShareService shareService;
-    @PostMapping("{topicId}/topic-set/{topic-setId}")
+    @PostMapping("{topicId}/topic-set/{topic-setId}/{username}")
     public ResponseEntity<Boolean> shareTopicToUsers(
+            @PathVariable(name = "username") String username,
             @PathVariable(name = "topic-setId") Long topicsetId,
             @RequestBody ShareDtoRequest shareDtoRequest){
-        boolean message = shareService.shareTopicToUsers(topicsetId, shareDtoRequest);
+        boolean message = shareService.shareTopicToUsers(topicsetId, shareDtoRequest,username);
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
 }

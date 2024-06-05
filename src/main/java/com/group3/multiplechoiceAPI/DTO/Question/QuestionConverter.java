@@ -19,6 +19,7 @@ public class QuestionConverter {
         questionDTO.setQuestionContent(question.getQuestionContent());
         questionDTO.setAnswer(question.getAnswer());
         questionDTO.setTopicSetID(question.getTopicSet().getTopicSetID());
+        questionDTO.setLevel(question.getLevel());
         return questionDTO;
     }
 

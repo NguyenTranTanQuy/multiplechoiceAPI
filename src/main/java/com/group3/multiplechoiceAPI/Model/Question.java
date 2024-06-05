@@ -17,6 +17,7 @@ public class Question {
     private @Id Long questionID;
     private String questionContent;
     private String answer;
+    private int level;
 
     @JsonIgnore
     @OneToMany(mappedBy = "question", cascade = CascadeType.MERGE)

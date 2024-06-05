@@ -29,7 +29,7 @@ public class ShareService implements IShareService {
 
     @Transactional
     @Override
-    public boolean shareTopicToUsers(Long topicId, ShareDtoRequest shareDtoRequest) {
+    public boolean shareTopicToUsers(Long topicId, ShareDtoRequest shareDtoRequest, String username) {
 
         Topic_Set topicSet = topicSetRepository.findById(topicId).orElseThrow();
 
@@ -45,16 +45,15 @@ public class ShareService implements IShareService {
             share.setTopicSet(topicSet);
             share.setId(sharePK);
             share.setSharedDate(new Date());
-            share.setShareContent("Username đã chia sẽ bộ đề " + topicSet.getTopicSetName() + "cho bạn");
+            share.setShareContent(username + " đã chia sẽ bộ đề " + topicSet.getTopicSetName() + " cho bạn");
             topicSet.getShareList().add(share);
             user.getShareList().add(share);
-
             shareRepository.save(share);
             userRepository.save(user);
         }
 
         topicSetRepository.save(topicSet);
-        
+
         return true;
     }
 }

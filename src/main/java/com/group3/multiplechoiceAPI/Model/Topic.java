@@ -13,6 +13,10 @@ public class Topic {
     private @Id Long topicID;
     private @NonNull String topicName;
 
+    public Topic(@NonNull String topicName) {
+        this.topicName = topicName;
+    }
+
     @ManyToOne
     @JoinColumn(name="username")
     private User user;

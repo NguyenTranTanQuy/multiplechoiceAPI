@@ -25,8 +25,14 @@ public class QuestionService {
     public List<Question> getAllQuestionsByTopicSetID(Long topicSet) {
         return questionRepository.findAllQuestionsByTopicSetID(topicSet);
     }
+    public List<Question> getAllQuestionsByTopicSetIDAndLevel(Long topicSetID,int level) {
+        return questionRepository.findAllQuestionsByTopicSetIDAndLevel(topicSetID,level);
+    }
     public Question getQuestionByID(Long questionID) {
         return questionRepository.findById(questionID).get();
+    }
+    public List<Integer> checkLevel(Long topicSetID) {
+        return questionRepository.checkLevel(topicSetID);
     }
 
 }
